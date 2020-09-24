@@ -1,0 +1,247 @@
+﻿<div align="center">
+
+## Space Fighter \(a complete game & DirectDraw Tutorial\)
+
+<img src="PIC2002628617299800.gif">
+</div>
+
+### Description
+
+One day, when you were partoling a far-away sector of the galaxy, when the mission control gave you a special task. You had no idea what it was going to be like.<br>
+
+As ever, offers a COMPLETE game, and a DirectDraw tutorial / explanation of the game, and how to make another one like it.<br>Game runs at 75fps, even though screenshot shows 50-something. It's just my huge screenshot taker wasting memory and CPU.
+ 
+### More Info
+ 
+
+
+<span>             |<span>
+---                |---
+**Submitted On**   |2002-06-28 12:45:00
+**By**             |[XA](https://github.com/Planet-Source-Code/PSCIndex/blob/master/ByAuthor/xa.md)
+**Level**          |Intermediate
+**User Rating**    |5.0 (25 globes from 5 users)
+**Compatibility**  |VB 5\.0, VB 6\.0
+**Category**       |[DirectX](https://github.com/Planet-Source-Code/PSCIndex/blob/master/ByCategory/directx__1-44.md)
+**World**          |[Visual Basic](https://github.com/Planet-Source-Code/PSCIndex/blob/master/ByWorld/visual-basic.md)
+**Archive File**   |[Space\_Figh998106282002\.zip](https://github.com/Planet-Source-Code/xa-space-fighter-a-complete-game-directdraw-tutorial__1-36347/archive/master.zip)
+
+
+
+
+
+### Source Code
+
+<font face="Arial" size="2">A complete DirectDraw Game &
+Tutorial</font></p>
+<p align="left"><font face="Arial" size="2">       
+To skip to the tutorial, <a href="#DirectDraw Tutorial">click here</a>. <br>       
+To skip to the bonus content, <a href="#Bonus Content.">click here</a>.<br>        If you are interested in another
+tutorial in DirectDraw, made by me, you can check out the
+<a href="http://www.pscode.com/vb/scripts/ShowCode.asp?txtCodeId=36204&lngWId=1">
+PingBall Challenge</a>, the same type of tutorial: you get a game, rules, and an
+instruction on how to make it.</font></p>
+<p align="left"><font face="Westminster" size="6">   
+<a name="Space Fighter Challenge.">Space Fighter Challenge.</a></font><br>        Well... here goes the
+second one. Finish at least 20 levels of this game. You control a ship which has
+got 100 health points. When you are hit with a laser, you lose 1 health point.
+If you hit another ship (!!!), you lose 10 health points.<br>        Your health points
+are restored every time you enter a new level. You will enter level 2 on 100
+points, level 3 on 200 points, level 4 on 400 points. To calculate the 
+amount of points needed to enter a level you can use this formula: amount=100*2^LevelToEnter
+.<br>        You are apposed by a
+small (you will see just how <i>small</i> it is, when you reach higher levels)
+fleet of ships. As you progress in levels, the AI on those ships will improve.
+So will the health points.<br>        You can use any kind
+of strategy you like, it all is quite difficult. <b>Post your scores here</b>,
+and may the <b>best one win!</b></p>
+<p align="left"><font face="Westminster" size="6">   
+<a name="DirectDraw Tutorial">DirectDraw Tutorial</a></font><br>
+<font face="Arial" size="2">        Unlike
+the PingBall Challenge, this one doesn't contain any resolution code. So, if the
+game runs slow, decrease the resolution. Please do not decrease the color depth
+to anything lower than 16-bit - it makes it look <i>bad</i>.</font></p>
+<p align="left"><font face="Arial" size="2">       
+The program starts with the Form_Load event, in which the mouse is immediately
+hidden (thanks, Mick!), and then it does to the Init sub.</font></p>
+<p align="left"><font face="Arial" size="2">       
+The Init sub is the core of the whole program: it initializes, and runs the game
+(or maybe calls the subs that run the game). First (after setting the error
+handler), we create DirectDraw, and bind it to our form (<i>Call
+dd.SetCooperativeLevel(Me.hWnd, DDSCL_FULLSCREEN Or DDSCL_ALLOWMODEX Or
+DDSCL_EXCLUSIVE)</i>). Then we <i>SetDisplayMode </i>to 800x600 with 16-bit
+depth - 65025 colors. After creating the <i>description</i> of the primary
+surface, we create the primary surface from it. The back buffer is then created
+for the primary buffer.</font></p>
+<p align="left"><font face="Arial" size="2">       
+Those who know the basic concepts of DirectDraw, are recommended to
+<a href="#Then comes">click here</a>
+(skips a few paragraphs). However, you might just read on.</font></p>
+<p align="left"><font face="Arial" size="2">       
+The primary surface represents the screen. Everything that appears on the
+primary surface, appears on screen. Now, if I was to paint the whole thing
+directly on the primary surface, the one playing the game would see me painting,
+and (probably) the screen will flicker. To counter this, people use backbuffers.
+When you paint onto the backbuffer, user doesn't see anything. Then, in one
+action (<i>Flip</i>), you paint the entire scene onto the primary surface - the
+user doesn't see you painting.</font></p>
+<p align="left"><font face="Arial" size="2">       
+Imagine a surface as an image. You can print the text on (only it's not called
+printing), or put additional pictures. DirectDraw makes it fast and quick, and
+adds some features. For example, very easy transparency. Matt Carpenter's
+<a href="http://www.pscode.com/vb/scripts/ShowCode.asp?txtCodeId=36283&lngWId=1">
+A Cool Space Invaders Game</a> uses masks to achieve this. It's painful, and you
+have to store the masks somewhere as well. To see how I solve this problem, read
+on.</font></p>
+<p align="left"><font face="Arial" size="2">       
+Then, to load an image, you need to describe it first. You will need to set it's
+height & width, before you can load it. </font></p>
+<p align="left"><font face="Arial" size="2">       
+<a name="Then comes">Then comes</a> the first real code: you have to load the images. <b>COPY CODE:</b>
+you might want to use <b>UniversalLoad</b> in your programs. Since DirectDraw
+understands only bitmap images, we will have to re-save the file as bitmap if it
+isn't already. The sub is quite self-explanatory. The flags I use are standard,
+and you know them from their name. What I do in the end is that I define that
+the black color shouldn't be blitted, when a special flag is used. That is the
+first half of the transparency</font></p>
+<p align="left"><font face="Arial" size="2">       
+All the small things done (such as creating the starry background, initializing
+the arrays, fonts), we get onto our 5 line program : </font></p>
+<p align="left"><b><font face="Arial" size="2">Do </font><br><b><font face="Arial" size="2">SplashEngine</font><br>
+<font face="Arial" size="2">StoryEngine</font><br>
+<font face="Arial" size="2">GameEngine</font><br>
+<font face="Arial" size="2">Loop</font></b></p>
+</b>
+<p align="left"><font face="Arial" size="2">       
+You can see that the whole program is done in Engine subs. Each Engine sub does
+it's own things, and is accompanied by a Blt sub with the same first part of the
+name.</font></p>
+<p align="left"><font face="Arial" size="2">       
+<b>SplashEngine</b> just scrolls the star field, and displays your ship in the
+center. Blt sub does this: empties the screen (<i>BltColorFill</i>), and prints
+the text. Notice the <i>DDBLTFAST_SRCCOLORKEY</i> flag in the blt sub - it makes
+sure that we use the color key that we defined in the InitSurfaces sub - second
+part of my transparency. And, this is minimal trouble, and almost no performance
+decrease.</font></p>
+<p align="left"><font face="Arial" size="2">       
+<b>StoryEngine</b> controls the small story that we have along with the game -
+it calls the SplashBlt sub with the text it wants to display.</font></p>
+<p align="left"><font face="Arial" size="2">       
+<b>GameEngine</b> is the core of the game (again!). It calls (again!) the
+different subs that drive the game. Let's take a look at those one by one.</font></p>
+<p align="left"><font face="Arial" size="2">       
+<b>CheckLevel</b> makes sure that we are on the correct level. It is basic and
+self-explanatory.</font></p>
+<p align="left"><font face="Arial" size="2">       
+<b>StarFieldProccess</b> take every star, and moves it by it's SpeedY. It also
+re-spawns the stars when they meet the bottom. Very basic.</font></p>
+<p align="left"><font face="Arial" size="2">       
+<b>MoveYourShip</b> is responsive for controlling the movement of your ship (how
+did you guess?). It takes the SpeedX (and SpeedY if a certain constant is true,
+about that later), adds it, and then handles the consequences.</font></p>
+<p align="left"><font face="Arial" size="2">       
+<b>MoveAIUnits</b> is a more complex part. It is a loop to call <i>EnemyAI</i>
+for every enemy, and to re-spawn the enemies when they are killed or hit the
+bottom.<br>       
+<b>    EnemyAI</b> is passed with an enemy ID, and enemy's AI
+level (1-100). It is responsible for what each ship does. Basically, it's a
+large Select Case, which then uses <i>enemy(ID).location</i> and <i>yourlocation</i>
+to compute what it should do. It's easy to figure out what it does, and there is
+nothing special to DirectDraw here</font></p>
+<p align="left"><font face="Arial" size="2">       
+<b>HandleBullets </b>is probably the most severe computing sub in the entire
+game. It checks who wants to shoot, checks whether they can shoot, and shoots
+(if they can). It handles both AI and Player actions. It uses <i>BadWeaponShots
+</i>and <i>GoodWeaponShots</i> to store the coordinates of the laser shots.<br>
+       
+Every time it's called, it cleans-up it's old bullets, not to waste memory. Then
+it uses <i>Collides</i> function to determine the collisions between laser shots
+and targets. It does that for both sides. It also handles the damage done by
+this shot. Then, (as a bonus) it checks for collisions between your ship and
+enemy ships.<br>       
+<b>Collides</b> is a sub that <b>You can copy</b>, and use in your own projects.
+It checks if the figure1 collides with figure2 - a sort of collision detection
+sub. I think it's correct, at least 90% of this game relies on it..</font></p>
+<p align="left"><font face="Arial" size="2">       
+<b>Gameblt</b>, finally, is the sub that paints it all. This one is quite
+complex so let's walk through it.<br>       
+<b>CheckScreen</b> <b>(Copy Code: CheckScreen, ExModeActive</b>, and
+adjust the name of the sub that should be called to restore the surfaces) )is a
+standard sub in any blt sub I wrote - it checks if the user hadn't switched away
+from us (ALT-TAB or CTRL-ALT-DEL). If the user didn't, nothing happens. However,
+if he/she did, the sub would be in the loop until he switches back. It then
+would restore the surfaces.<br>       
+<b>BltColorFill</b> just blanks the entire screen with black color.<br>       
+<b>StarFieldToBackBuffer</b></font> just paints the stars() array to the back
+buffer. Simple. It uses the star surface to create them (<i>BltFast</i>) on the
+screen.<br>        Then it paints all
+the standard text onto the top left corner.<br>        Then, using loops, it
+paints Enemy ships, your laser shots, and enemy laser shots. If the <b>loss</b>
+variable is not true, it paints your ship. If it is, it paints the You Lost!
+message. Then the whole thing is <i>Flip</i>ed onto the primary surface. That is
+it.</p>
+<p align="left">        If you want to skip
+this, <a href="#So, how does">click here.</a></p>
+<p align="left">        <b>On Blitting</b>.
+There is a number of different Blt subs used by DirectDraw. </p>
+<blockquote>
+ <ul>
+ <li>
+ <p align="left">Blt allows you to strech what you are drawing. It is a
+ little slower then (next one)</li>
+ <li>
+ <p align="left">BltFast - supply the x,y coordinates, plus a rectangle - and
+ it paints. It's faster.</li>
+ <li>
+ <p align="left">BltColorFill - doesn't paint an image, just a huge box
+ filled with the color you specify.</li>
+ <li>
+ <p align="left">There are other blts, but they are little or no use in the
+ scope of this tutorial.</li>
+ </ul>
+ <p align="left"><b>On RECT</b>.</p>
+</blockquote>
+<p align="left">        You select which part
+of the picture you want copied/copied to. In our case, we want the whole
+picture, so we can just forget about modifying this, and just pass it as it is.
+If you want to use it, set Left and Top as you would normally, while Right
+should be Left + Width, Bottom should be Top + Height.</p>
+<p align="left">       
+<a name="So, how does">So, how does</a> this thing work? It is tied together by
+the Form_Keydown and Form_KeyUp events. Keydown basically provides control of
+the game - it allows you to pause, start or end the game, as well as checking
+your Left & Right arrows (Up & Down ones as well...), Space, and other keys. It
+sets variables that can be used, if the Engine running is right. Otherwise, they
+are just ignored.</p>
+<p align="left"><font face="Westminster" size="6">   
+<a name="Bonus Content.">Bonus Content.</a></font></p>
+<p align="left"><font face="Arial" size="2">       
+Bonuses? Quite a few actually. Check the ModTypes for the declarations of
+various constants are used. Most of the bonuses are achieved by changing these.
+Let's take them one by one:<br>
+ <ul>
+ <li>
+ <b>AllowYMovement</b> - if true,
+ it allows you to use Up & Down arrows to move vertically. Recommended:
+ False.</li>
+ <li>
+ <b>AmountOfStars</b> - specifies how many stars are there in the background.
+ You can increase the setting if you want a more starry background, or would
+ like to slow down (for some reason) the game.<li>
+ <b>MaxStarSpeed</b> - specifies the maximum speed with which a star should
+ move. Larger numbers will be uncomfortable.<li>
+ <b>MaxGoodBullets</b> - the maximum amount of your shots that can be in the
+ air at once. You can lower this value if you want a more challenging game.<li>
+ <b>MaxBadBullets</b> - the maximum amount of bad shots that cen be in the air
+ at once. You can lower the value to make it easier on higher levels, or put it
+ sky-high to  have certain death on lvl 55.</ul>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p></p>
+<p>         That's about it. Thanks for
+reading this far. If you liked it, vote.</p>
+</font><font face="Arial" size="4">
+<p align="center"><b>The END</b></p>
+
